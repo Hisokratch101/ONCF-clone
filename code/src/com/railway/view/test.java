@@ -1,4 +1,4 @@
-package frontend;
+package com.railway.view;
 import javax.swing.*;
 import java.awt.*;
 
