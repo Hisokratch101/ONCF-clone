@@ -10,6 +10,43 @@ public class Voyageur {
     private CarteDeReduction carteDeReduction;
     private String email;
     private String motDePasse;
+    private String Id;
+    
+    public String getNomComplet() {
+        return nomComplet;
+    }
+
+    public void setNomComplet(String nomComplet) {
+        this.nomComplet = nomComplet;
+    }
+
+    public CarteDeReduction getCarteDeReduction() {
+        return carteDeReduction;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     // Database connection
     private Connection connection;
@@ -27,10 +64,11 @@ public class Voyageur {
 
     public Billet reserver(Trajets trajet) {
         double prix = trajet.getPrix();
+        int id = trajet.getId();
         if (this.carteDeReduction != null) {
             prix = this.carteDeReduction.calculerPrix(prix);
         }
-        return new Billet(trajet, this, prix);
+        return new Billet(id,trajet, this, prix);
     }
 
     public boolean login(String email, String motDePasse) {
@@ -92,5 +130,13 @@ public class Voyageur {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 }

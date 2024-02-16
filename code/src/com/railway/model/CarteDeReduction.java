@@ -8,6 +8,53 @@ public class CarteDeReduction {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/reservation_system";
     private static final String USERNAME = "your_username";
     private static final String PASSWORD = "your_password";
+    private int id;
+    private String type;
+    private double reduction ;
+
+    
+    public static String getJdbcUrl() {
+        return JDBC_URL;
+    }
+
+    public static String getUsername() {
+        return USERNAME;
+    }
+
+    public static String getPassword() {
+        return PASSWORD;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getReduction() {
+        return reduction;
+    }
+
+    public void setReduction(double reduction) {
+        this.reduction = reduction;
+    }
+    
+
+    public CarteDeReduction(int id, String type, double reduction) {
+        this.id = id;
+        this.type = type;
+        this.reduction = reduction;
+    }
 
     public static void createCarteDeReduction(CarteDeReduction carteDeReduction) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
@@ -28,7 +75,7 @@ public class CarteDeReduction {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
+                int id = resultSet.getInt("id");
                 String type = resultSet.getString("type");
                 double reduction = resultSet.getDouble("reduction");
                 CarteDeReduction carteDeReduction = new CarteDeReduction(id, type, reduction);
@@ -46,7 +93,7 @@ public class CarteDeReduction {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, carteDeReduction.getType());
             preparedStatement.setDouble(2, carteDeReduction.getReduction());
-            preparedStatement.setString(3, carteDeReduction.getId());
+            preparedStatement.setInt(3, carteDeReduction.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,4 +110,5 @@ public class CarteDeReduction {
             e.printStackTrace();
         }
     }
+    public double calculerPrix(double prix){return 1.5;}
 }
