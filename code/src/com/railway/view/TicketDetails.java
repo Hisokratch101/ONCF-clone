@@ -1,4 +1,4 @@
-package frontend;
+package com.railway.view;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
