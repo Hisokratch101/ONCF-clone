@@ -41,8 +41,8 @@ public class user extends JFrame {
         adminButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add action for admin button
-                JOptionPane.showMessageDialog(user.this, "You clicked Admin button!");
+            	logAdmin frame = new logAdmin();
+				frame.setVisible(true);
             }
         });
         backgroundLabel.add(adminButton);
