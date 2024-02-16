@@ -1,3 +1,5 @@
+package com.railway.model;
+
 
 import java.util.*;
 
@@ -15,22 +17,22 @@ public class Trajets {
     /**
      * 
      */
-    public void Depart;
+    public String Depart;
 
     /**
      * 
      */
-    public void Arriver;
+    public String Arriver;
 
     /**
      * 
      */
-    public void DateDepart;
+    public Date DateDepart;
 
     /**
      * 
      */
-    public void DateArrivee;
+    public Date DateArrivee;
 
     /**
      * 

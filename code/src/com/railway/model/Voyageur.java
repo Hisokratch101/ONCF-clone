@@ -1,3 +1,5 @@
+package com.railway.model;
+
 
 import java.util.*;
 
@@ -15,22 +17,22 @@ public class Voyageur {
     /**
      * 
      */
-    public void NomComplet;
+    public String NomComplet;
 
     /**
      * 
      */
-    public void CarteDeReduction;
+    public CarteDeReduction CarteDeReduction;
 
     /**
      * 
      */
-    public void Email;
+    public String Email;
 
     /**
      * 
      */
-    public void MotDePasse;
+    public String MotDePasse;
 
     /**
      * 
@@ -49,7 +51,7 @@ public class Voyageur {
     /**
      * 
      */
-    public void Sign up() {
+    public void Signup() {
         // TODO implement here
     }
 

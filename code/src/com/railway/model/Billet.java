@@ -1,3 +1,4 @@
+package com.railway.model;
 
 import java.util.*;
 
@@ -15,22 +16,22 @@ public class Billet {
     /**
      * 
      */
-    public void Id;
+    public int Id;
 
     /**
      * 
      */
-    public void Trajet;
+    public Trajets Trajet;
 
     /**
      * 
      */
-    public void Voyageur;
+    public Voyageur Voyageur;
 
     /**
      * 
      */
-    public void Prix;
+    public int Prix;
 
     /**
      * 

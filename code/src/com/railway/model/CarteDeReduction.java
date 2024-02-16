@@ -1,3 +1,5 @@
+package com.railway.model;
+
 
 import java.util.*;
 
@@ -15,17 +17,17 @@ public class CarteDeReduction {
     /**
      * 
      */
-    public void Id;
+    public int Id;
 
     /**
      * 
      */
-    public void Type;
+    public String Type;
 
     /**
      * 
      */
-    public void Reduction;
+    public int Reduction;
 
     /**
      * 
