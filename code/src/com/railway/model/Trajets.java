@@ -41,4 +41,9 @@ public class Trajets {
         // TODO implement here
     }
 
+    public String getDepart() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDepart'");
+    }
+
 }
