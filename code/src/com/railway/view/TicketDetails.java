@@ -4,12 +4,17 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Label;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class TicketDetails extends JFrame {
 
@@ -43,9 +48,9 @@ public class TicketDetails extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
         
-        JLabel lblTicketDetails = new JLabel("Ticket Details");
-        lblTicketDetails.setBounds(158, 11, 132, 20);
-        lblTicketDetails.setForeground(Color.BLUE);
+        JLabel lblTicketDetails = new JLabel("TICKET");
+        lblTicketDetails.setBounds(302, 10, 132, 20);
+        lblTicketDetails.setForeground(new Color(255, 128, 0));
         lblTicketDetails.setFont(new Font("Tahoma", Font.BOLD, 16));
         contentPane.add(lblTicketDetails);
         
@@ -65,12 +70,8 @@ public class TicketDetails extends JFrame {
         lblDate.setBounds(38, 180, 46, 14);
         contentPane.add(lblDate);
         
-        JLabel lblPrice = new JLabel("Price:");
-        lblPrice.setBounds(38, 216, 46, 14);
-        contentPane.add(lblPrice);
-        
         JButton btnPrint = new JButton("Print");
-        btnPrint.setBounds(390, 417, 89, 23);
+        btnPrint.setBounds(313, 384, 105, 36);
         btnPrint.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Perform printing action here
@@ -78,5 +79,28 @@ public class TicketDetails extends JFrame {
             }
         });
         contentPane.add(btnPrint);
+        
+        JPanel panel = new JPanel();
+        panel.setBounds(476, -3, 425, 510);
+        contentPane.add(panel);
+        
+        JLabel lblNewLabel = new JLabel("New label");
+        panel.add(lblNewLabel);
+        lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\othma\\git\\ONCF-clone\\code\\icon\\icon2.jpg"));
+        
+        JLabel lblPrice = new JLabel("Price:");
+        lblPrice.setBounds(38, 228, 26, 13);
+        contentPane.add(lblPrice);
+        
+        JButton btnBack = new JButton("back");
+        btnBack.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Accueil frame = new Accueil();
+                frame.setVisible(true);
+        	}
+        });
+        btnBack.setBounds(70, 384, 105, 36);
+        contentPane.add(btnBack);
     }
 }

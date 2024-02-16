@@ -1,6 +1,5 @@
 package com.railway.view;
 
-
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +12,12 @@ import java.awt.Button;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Panel;
+import javax.swing.JTextPane;
 
 public class Accueil extends JFrame {
 
@@ -65,7 +70,7 @@ public class Accueil extends JFrame {
         contentPane.add(panel_1);
         
         JPanel panel_2 = new JPanel();
-        panel_2.setBounds(157, 27, 828, 494);
+        panel_2.setBounds(157, 62, 828, 459);
         contentPane.add(panel_2);
         panel_2.setToolTipText("Depart");
         panel_2.setLayout(null);
@@ -94,11 +99,29 @@ public class Accueil extends JFrame {
         panel_2.add(rechercheButton);
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 80, 808, 404);
+        scrollPane.setBounds(10, 87, 808, 404);
         panel_2.add(scrollPane);
         
         table = new JTable();
         scrollPane.setViewportView(table);
+        
+        JButton btnNewButton_1 = new JButton("Acheter Ticket");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TicketDetails frame = new TicketDetails();
+                frame.setVisible(true);
+        	}
+        });
+        btnNewButton_1.setForeground(new Color(0, 0, 0));
+        btnNewButton_1.setBackground(new Color(255, 128, 0));
+        btnNewButton_1.setBounds(780, 565, 100, 30);
+        contentPane.add(btnNewButton_1);
+        
+        JTextPane txtpnWelcomeToOncf = new JTextPane();
+        txtpnWelcomeToOncf.setFont(new Font("Yu Gothic Medium", Font.BOLD, 25));
+        txtpnWelcomeToOncf.setText("welcome to oncf");
+        txtpnWelcomeToOncf.setBounds(419, 0, 216, 64);
+        contentPane.add(txtpnWelcomeToOncf);
         
         
         departComboBox.addItem("Station A");
