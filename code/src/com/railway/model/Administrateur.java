@@ -2,6 +2,7 @@ package com.railway.model;
 
 import com.railway.model.database.DatabaseConnection;
 
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;

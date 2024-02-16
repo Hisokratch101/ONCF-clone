@@ -1,49 +1,96 @@
 package com.railway.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Voyageur {
-    private String name;
-    private int age;
+    private String nomComplet;
+    private CarteDeReduction carteDeReduction;
+    private String email;
+    private String motDePasse;
 
-    public Voyageur(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
+    // Database connection
+    private Connection connection;
 
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Voyageur(String nomComplet, String email, String motDePasse, Connection connection) {
+        this.nomComplet = nomComplet;
+        this.email = email;
+        this.motDePasse = motDePasse;
+        this.connection = connection;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setCarteDeReduction(CarteDeReduction carteDeReduction) {
+        this.carteDeReduction = carteDeReduction;
     }
 
-    @Override
-    public String toString() {
-        return "Voyageur{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+    public Billet reserver(Trajets trajet) {
+        double prix = trajet.getPrix();
+        if (this.carteDeReduction != null) {
+            prix = this.carteDeReduction.calculerPrix(prix);
+        }
+        return new Billet(trajet, this, prix);
     }
-    
-    
-    public void ModifierMotDePasse(String nouveauMotDePasse) {
-        // Placeholder implementation for modifying password
-        System.out.println("Password modification process initiated.");
-        // Add your password modification logic here
+
+    public boolean login(String email, String motDePasse) {
+        if (email == null || email.isEmpty() || motDePasse == null || motDePasse.isEmpty()) {
+            throw new IllegalArgumentException("L'email et le mot de passe ne peuvent pas être vides.");
+        }
+        try {
+            String query = "SELECT * FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, motDePasse);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-    
-    public void ConsulterCarteDeReduction() {
-        // Placeholder implementation for checking reduction card
-        System.out.println("Reduction card consultation process initiated.");
-        // Add your reduction card consultation logic here
+
+    public boolean signUp() {
+        if (email == null || email.isEmpty() || motDePasse == null || motDePasse.isEmpty()) {
+            throw new IllegalArgumentException("L'email et le mot de passe ne peuvent pas être vides.");
+        }
+        try {
+            String query = "INSERT INTO voyageurs (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, nomComplet);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, motDePasse);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-    
+
+    public void imprimerBillet(int billetId) {
+        try {
+            String query = "SELECT * FROM billets WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, billetId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String classe = resultSet.getString("classe");
+                String destination = resultSet.getString("destination");
+                double prix = resultSet.getDouble("prix");
+
+                // Print the ticket details
+                System.out.println("Billet No: " + billetId);
+                System.out.println("Classe: " + classe);
+                System.out.println("Destination: " + destination);
+                System.out.println("Prix: " + prix);
+                System.out.println("Imprimé avec succès.");
+            } else {
+                System.out.println("Billet non trouvé.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
