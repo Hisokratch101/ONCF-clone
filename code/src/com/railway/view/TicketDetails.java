@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
@@ -90,7 +91,7 @@ public class TicketDetails extends JFrame {
         lblNewLabel.setIcon(new ImageIcon("C:\\Users\\othma\\git\\ONCF-clone\\code\\icon\\icon2.jpg"));
         
         JLabel lblPrice = new JLabel("Price:");
-        lblPrice.setBounds(38, 228, 26, 13);
+        lblPrice.setBounds(38, 262, 46, 13);
         contentPane.add(lblPrice);
         
         JButton btnBack = new JButton("back");
@@ -102,5 +103,9 @@ public class TicketDetails extends JFrame {
         });
         btnBack.setBounds(70, 384, 105, 36);
         contentPane.add(btnBack);
+        
+        JLabel lblClasse = new JLabel("Classe:");
+        lblClasse.setBounds(38, 221, 46, 13);
+        contentPane.add(lblClasse);
     }
 }

@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Panel;
 import javax.swing.JTextPane;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class Accueil extends JFrame {
 
@@ -69,6 +71,18 @@ public class Accueil extends JFrame {
         panel_1.setBounds(0, 0, 160, 615);
         contentPane.add(panel_1);
         
+        JRadioButton rdbtnClasse1 = new JRadioButton("Classe 1");
+        panel_1.add(rdbtnClasse1);
+        
+        JRadioButton rdbtnClasse2 = new JRadioButton("Classe 2");
+        rdbtnClasse2.setSelected(true); // Select Classe 2 by default
+        panel_1.add(rdbtnClasse2);
+        
+        // Group the radio buttons so that only one can be selected at a time
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(rdbtnClasse1);
+        buttonGroup.add(rdbtnClasse2);
+        
         JPanel panel_2 = new JPanel();
         panel_2.setBounds(157, 62, 828, 459);
         contentPane.add(panel_2);
@@ -86,12 +100,12 @@ public class Accueil extends JFrame {
         
         departComboBox = new JComboBox<String>();
         departComboBox.setToolTipText("Depart");
-        departComboBox.setBounds(256, 40, 150, 21);
+        departComboBox.setBounds(447, 40, 150, 21);
         panel_2.add(departComboBox);
         
         arriverComboBox = new JComboBox<String>();
         arriverComboBox.setToolTipText("Arriver");
-        arriverComboBox.setBounds(416, 40, 150, 21);
+        arriverComboBox.setBounds(278, 40, 150, 21);
         panel_2.add(arriverComboBox);
         
         Button rechercheButton = new Button("Recherche");
@@ -107,10 +121,10 @@ public class Accueil extends JFrame {
         
         JButton btnNewButton_1 = new JButton("Acheter Ticket");
         btnNewButton_1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		TicketDetails frame = new TicketDetails();
+            public void actionPerformed(ActionEvent e) {
+                TicketDetails frame = new TicketDetails();
                 frame.setVisible(true);
-        	}
+            }
         });
         btnNewButton_1.setForeground(new Color(0, 0, 0));
         btnNewButton_1.setBackground(new Color(255, 128, 0));
@@ -118,9 +132,10 @@ public class Accueil extends JFrame {
         contentPane.add(btnNewButton_1);
         
         JTextPane txtpnWelcomeToOncf = new JTextPane();
+        txtpnWelcomeToOncf.setBackground(new Color(255, 128, 0));
         txtpnWelcomeToOncf.setFont(new Font("Yu Gothic Medium", Font.BOLD, 25));
-        txtpnWelcomeToOncf.setText("welcome to oncf");
-        txtpnWelcomeToOncf.setBounds(419, 0, 216, 64);
+        txtpnWelcomeToOncf.setText("welcome to ONCF");
+        txtpnWelcomeToOncf.setBounds(419, 0, 258, 64);
         contentPane.add(txtpnWelcomeToOncf);
         
         
