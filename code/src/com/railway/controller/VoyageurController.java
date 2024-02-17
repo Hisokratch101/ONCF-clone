@@ -31,14 +31,17 @@ public class VoyageurController {
 	}
 
 	public void imprimerBillet(int billetId) {
+
 		voyageur.imprimerBillet(billetId);
 	}
 
 	public String getId() {
+
 		return voyageur.getId();
 	}
 
 	public void setId(String id) {
+
 		voyageur.setId(id);
 	}
 }

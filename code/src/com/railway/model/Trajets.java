@@ -19,51 +19,63 @@ public class Trajets {
     }
 
     public void setPrix(double prix) {
+
         this.prix = prix;
     }
     public int getId() {
+
         return id;
     }
     public void setId(int id) {
+
         this.id = id;
     }
     // Obtient le prix du trajet
     public double getPrix() {
+
         return this.prix;
     }
     // Getter and setter for private String depart
     public String getDepart() {
+
         return this.depart;
     }
 
     public void setDepart(String depart) {
+
         this.depart = depart;
     }
 
     // Getter and setter for private String arriver
     public String getArriver() {
+
         return this.arriver;
     }
 
     public void setArriver(String arriver) {
+
         this.arriver = arriver;
     }
 
     // Getter and setter for private String dateDepart
     public String getDateDepart() {
+
         return this.dateDepart;
     }
 
     public void setDateDepart(String dateDepart) {
+
         this.dateDepart = dateDepart;
     }
 
     // Getter and setter for private String dateArrivee
     public String getDateArrivee() {
+
         return this.dateArrivee;
     }
 
     public void setDateArrivee(String dateArrivee) {
+
         this.dateArrivee = dateArrivee;
     }
     

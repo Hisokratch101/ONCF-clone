@@ -14,38 +14,47 @@ public class CarteDeReduction {
 
     
     public static String getJdbcUrl() {
+
         return JDBC_URL;
     }
 
     public static String getUsername() {
+
         return USERNAME;
     }
 
     public static String getPassword() {
+
         return PASSWORD;
     }
 
     public int getId() {
+
         return id;
     }
 
     public void setId(int id) {
+
         this.id = id;
     }
 
     public String getType() {
+
         return type;
     }
 
     public void setType(String type) {
+
         this.type = type;
     }
 
     public double getReduction() {
+
         return reduction;
     }
 
     public void setReduction(double reduction) {
+
         this.reduction = reduction;
     }
     
@@ -110,5 +119,6 @@ public class CarteDeReduction {
             e.printStackTrace();
         }
     }
-    public double calculerPrix(double prix){return 1.5;}
+    public double calculerPrix(double prix){
+        return 1.5;}
 }
