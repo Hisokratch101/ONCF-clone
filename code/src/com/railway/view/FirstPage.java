@@ -7,9 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FrirstPage extends JFrame {
+public class FirstPage extends JFrame {
 
-    public FrirstPage() {
+    public FirstPage() {
         setTitle("Welcome");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +29,7 @@ public class FrirstPage extends JFrame {
         clientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	log frame = new log();
+            	LogUser frame = new LogUser();
 				frame.setVisible(true);
             }
         });
@@ -41,7 +41,7 @@ public class FrirstPage extends JFrame {
         adminButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	logAdmin frame = new logAdmin();
+            	LogAdmin frame = new LogAdmin();
 				frame.setVisible(true);
             }
         });
@@ -54,7 +54,7 @@ public class FrirstPage extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new FrirstPage();
+                new FirstPage();
             }
         });
     }
