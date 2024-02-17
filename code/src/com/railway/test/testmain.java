@@ -1,4 +1,7 @@
-package com.railway.model;
+package com.railway.test;
+
+import com.railway.model.Administrateur;
+import com.railway.model.Trajets;
 
 import java.sql.Time;
 import java.time.LocalTime;
