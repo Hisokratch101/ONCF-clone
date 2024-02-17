@@ -119,6 +119,7 @@ public class CarteDeReduction {
             e.printStackTrace();
         }
     }
-    public double calculerPrix(double prix){
-        return 1.5;}
+    public double calculerPrix(double prixOriginal) {
+        return prixOriginal * (1 - this.reduction*0.01);
+    }
 }

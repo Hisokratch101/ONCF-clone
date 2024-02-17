@@ -55,7 +55,7 @@ public class User extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
-                new User()
+                new User();
             }
         });
     }
