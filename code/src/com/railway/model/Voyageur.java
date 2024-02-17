@@ -14,11 +14,10 @@ public class Voyageur {
     private String id;
     private Connection dbConnection;
 
-    public Voyageur(String nomComplet, String email, String motDePasse, Connection dbConnection) {
+    public Voyageur(String nomComplet, String email, String motDePasse) {
         this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
-        this.dbConnection = dbConnection;
     }
 
     public String getId() {

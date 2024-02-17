@@ -102,13 +102,8 @@ public class TicketDetails extends JFrame {
         
         JButton btnBack = new JButton("back");
         btnBack.addActionListener(new ActionListener() {
-<<<<<<< HEAD
-            public void actionPerformed(ActionEvent e) {
-                Accueil frame = new Accueil();
-=======
         	public void actionPerformed(ActionEvent e) {
         		AccueilUser frame = new AccueilUser();
->>>>>>> branch 'main' of https://github.com/Hisokratch101/ONCF-clone.git
                 frame.setVisible(true);
             }
         });

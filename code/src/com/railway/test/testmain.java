@@ -2,6 +2,7 @@ package com.railway.test;
 
 import com.railway.model.Administrateur;
 import com.railway.model.Trajets;
+import com.railway.model.Voyageur;
 
 import java.sql.Time;
 import java.time.LocalTime;
@@ -13,6 +14,6 @@ public class testmain {
         Time arr = new Time(22,20,0);
         Trajets trajet = new Trajets("gg", "FfdsggfsES", dep,arr, 245, 55);
         Administrateur.ajouterTrajet(trajet);
-        Voyageur voyageur = new Voyageur("iadias", "ssdd", "dfjdij", null);
+        Voyageur voyageur = new Voyageur("iadias", "ssdd", "dfjdij");
     }
 }
