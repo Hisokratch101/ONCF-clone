@@ -4,30 +4,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.railway.model.database.DatabaseConnection;
+
 public class CarteDeReduction {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/reservation_system";
-    private static final String USERNAME = "your_username";
-    private static final String PASSWORD = "your_password";
+    
     private int id;
     private String type;
     private double reduction ;
 
     
-    public static String getJdbcUrl() {
-
-        return JDBC_URL;
-    }
-
-    public static String getUsername() {
-
-        return USERNAME;
-    }
-
-    public static String getPassword() {
-
-        return PASSWORD;
-    }
-
+    
     public int getId() {
 
         return id;
@@ -66,7 +52,7 @@ public class CarteDeReduction {
     }
 
     public static void createCarteDeReduction(CarteDeReduction carteDeReduction) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "INSERT INTO carte_de_reduction (type, reduction) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, carteDeReduction.getType());
@@ -79,7 +65,8 @@ public class CarteDeReduction {
 
     public static List<CarteDeReduction> getAllCarteDeReduction() {
         List<CarteDeReduction> carteDeReductions = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DatabaseConnection.getConnection()){
+ 
             String query = "SELECT * FROM carte_de_reduction";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -97,7 +84,7 @@ public class CarteDeReduction {
     }
 
     public static void updateCarteDeReduction(CarteDeReduction carteDeReduction) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "UPDATE carte_de_reduction SET type=?, reduction=? WHERE id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, carteDeReduction.getType());
@@ -110,7 +97,7 @@ public class CarteDeReduction {
     }
 
     public static void deleteCarteDeReduction(String id) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "DELETE FROM carte_de_reduction WHERE id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, id);
