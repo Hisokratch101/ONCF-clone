@@ -25,7 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class log extends JFrame {
+public class LogUser extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -40,7 +40,7 @@ public class log extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					log frame = new log();
+					LogUser frame = new LogUser();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class log extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public log() {
+	public LogUser() {
 		setBackground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 881, 488);
@@ -123,7 +123,7 @@ public class log extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Accueil frame = new Accueil();
+				AccueilUser frame = new AccueilUser();
 				frame.setVisible(true);
 			}
 		});
@@ -142,7 +142,7 @@ public class log extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				inscreption frame = new inscreption();
+				Inscription frame = new Inscription();
                 frame.setVisible(true);
 				
 				

@@ -2,7 +2,6 @@ package com.railway.model;
 
 import com.railway.model.database.DatabaseConnection;
 
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -21,17 +20,23 @@ public class Administrateur {
         this.motDePasse = hashPassword(motDePasse);
     }
 
-
-    public void ajouterTrajet(Trajets trajet) {
+    public static void ajouterTrajet(Trajets trajet) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO trajets (id,depart, destination, horaire, prix) VALUES (?, ?, ?, ?)";
+<<<<<<< HEAD
+            String query = "INSERT INTO trajets (idTrajets,depart, arriver, dateDepart, dateArrivee, prix) VALUES (?,?, ?, ?, ?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, trajet.getId());
-            preparedStatement.setString(6, trajet.getDepart());
-            preparedStatement.setString(2, trajet.getArriver());
-            preparedStatement.setString(3, trajet.getDateDepart());
-            preparedStatement.setString(4, trajet.getDateArrivee());
-            preparedStatement.setDouble(5, trajet.getPrix());
+=======
+            String query = "INSERT INTO trajets (idTrajets , depart, arriver, dateDepart, dateArrivee, prix) VALUES (?,?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, trajet.getId());
+
+>>>>>>> 083ba5a6fe1769ac558c8ac2860b24dfc6a796a0
+            preparedStatement.setString(2, trajet.getDepart());
+            preparedStatement.setString(3, trajet.getArriver());
+            preparedStatement.setTime(4, trajet.getDateDepart());
+            preparedStatement.setTime(5, trajet.getDateArrivee());
+            preparedStatement.setDouble(6, trajet.getPrix());
             preparedStatement.executeUpdate();
             System.out.println("Trajet ajouté avec succès.");
         } catch (SQLException e) {
@@ -41,14 +46,14 @@ public class Administrateur {
 
     public void modifierTrajet(Trajets trajet) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE trajets SET depart=?, destination=?, date_depart=?, date_arrive=?prix=? WHERE id=?";
+            String query = "UPDATE trajets SET depart=?, destination=?, horaire=?, prix=? WHERE idTrajets=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, trajet.getDepart());
             preparedStatement.setString(2, trajet.getArriver());
-            preparedStatement.setString(3, trajet.getDateDepart());
-            preparedStatement.setString(4, trajet.getDateArrivee());
+            preparedStatement.setTime(3, trajet.getDateDepart());
+            preparedStatement.setTime(4, trajet.getDateArrivee());
             preparedStatement.setDouble(5, trajet.getPrix());
-            preparedStatement.setInt(6, trajet.getId());
+            preparedStatement.setInt(5, trajet.getId());
             preparedStatement.executeUpdate();
             System.out.println("Trajet modifié avec succès.");
         } catch (SQLException e) {
@@ -70,34 +75,24 @@ public class Administrateur {
 
     public void ajouterCarteReduction(CarteDeReduction carte) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO cartes_reduction (id,reduction, type) VALUES (?, ?,?)";
+            String query = "INSERT INTO cartes_reduction (Id, reduction,type) VALUES (?, ? , ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, carte.getId());
-            preparedStatement.setDouble(2, carte.getReduction());
+            preparedStatement.setString(1, String.valueOf(carte.getId()));
+            preparedStatement.setString(2, String.valueOf(carte.getReduction()));
             preparedStatement.setString(3, carte.getType());
-           
             preparedStatement.executeUpdate();
             System.out.println("Carte de réduction ajoutée avec succès.");
         } catch (SQLException e) {
             e.printStackTrace();
-            }
         }
-    private double reduction;
-
-    public double getReduction() {
-        return reduction;
-    }
-
-    public void setReduction(double reduction) {
-        this.reduction = reduction;
     }
 
     public void modifierCarteReduction(CarteDeReduction carte) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE cartes_reduction SET id=?, reduction=? WHERE type=?";
+            String query = "UPDATE cartereduction SET (Id, reduction,type) WHERE type=(?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, carte.getId());
-            preparedStatement.setDouble(2, carte.getReduction());
+            preparedStatement.setString(1, String.valueOf(carte.getId()));
+            preparedStatement.setString(2, String.valueOf(carte.getReduction()));
             preparedStatement.setString(3, carte.getType());
             preparedStatement.executeUpdate();
             System.out.println("Carte de réduction modifiée avec succès.");

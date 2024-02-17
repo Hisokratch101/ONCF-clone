@@ -1,17 +1,37 @@
 package com.railway.model;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+
+import com.railway.model.database.DatabaseConnection;
 
 public class Voyageur {
     private String nomComplet;
     private CarteDeReduction carteDeReduction;
     private String email;
     private String motDePasse;
-    private String Id;
-    
+    private String id;
+
+
+    public Voyageur(String nomComplet, String email, String motDePasse) {
+        this.nomComplet = nomComplet;
+        this.email = email;
+        this.motDePasse = motDePasse;
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getNomComplet() {
         return nomComplet;
     }
@@ -22,6 +42,10 @@ public class Voyageur {
 
     public CarteDeReduction getCarteDeReduction() {
         return carteDeReduction;
+    }
+
+    public void setCarteDeReduction(CarteDeReduction carteDeReduction) {
+        this.carteDeReduction = carteDeReduction;
     }
 
     public String getEmail() {
@@ -40,103 +64,103 @@ public class Voyageur {
         this.motDePasse = motDePasse;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    // Database connection
-    private Connection connection;
-
-    public Voyageur(String nomComplet, String email, String motDePasse, Connection connection) {
-        this.nomComplet = nomComplet;
-        this.email = email;
-        this.motDePasse = motDePasse;
-        this.connection = connection;
-    }
-
-    public void setCarteDeReduction(CarteDeReduction carteDeReduction) {
-        this.carteDeReduction = carteDeReduction;
-    }
-
-    public Billet reserver(Trajets trajet) {
+    public Billet reserver(Trajets trajet) throws SQLException {
         double prix = trajet.getPrix();
         int id = trajet.getId();
+        String depart = trajet.getDepart();
+        String arriver = trajet.getArriver();
+        Date dateDepart = trajet.getDateDepart();
+        Date dateArrivee = trajet.getDateArrivee();
+
         if (this.carteDeReduction != null) {
             prix = this.carteDeReduction.calculerPrix(prix);
         }
-        return new Billet(id,trajet, this, prix);
+
+        // Insert reservation into database
+        String insertQuery = "INSERT INTO reservations (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setDouble(1, prix);
+            preparedStatement.setString(2, depart);
+            preparedStatement.setString(3, arriver);
+            preparedStatement.setTime(4, new java.sql.Time(dateDepart.getTime()));
+            preparedStatement.setTime(5, new java.sql.Time(dateArrivee.getTime()));
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                // Reservation successful, fetch the auto-generated reservation ID
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int reservationId = generatedKeys.getInt(1);
+                        return new Billet(reservationId, trajet, this, prix);
+                    }
+                }
+            }
+        }
+
+        // If reservation failed or could not fetch reservation ID, return null
+        return null;
     }
 
-    public boolean login(String email, String motDePasse) {
-        if (email == null || email.isEmpty() || motDePasse == null || motDePasse.isEmpty()) {
-            throw new IllegalArgumentException("L'email et le mot de passe ne peuvent pas être vides.");
-        }
-        try {
-            String query = "SELECT * FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+    public boolean login(String email, String motDePasse) throws SQLException {
+        validateEmailAndPassword(email, motDePasse);
+
+        String query = "SELECT COUNT(*) FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, motDePasse);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
         }
+        return false;
     }
 
-    public boolean signUp() {
-        if (email == null || email.isEmpty() || motDePasse == null || motDePasse.isEmpty()) {
-            throw new IllegalArgumentException("L'email et le mot de passe ne peuvent pas être vides.");
-        }
-        try {
-            String query = "INSERT INTO voyageurs (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+    public boolean signUp() throws SQLException {
+        validateEmailAndPassword(email, motDePasse);
+
+        String query = "INSERT INTO voyageurs (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, nomComplet);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, motDePasse);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
-    public void imprimerBillet(int billetId) {
-        try {
-            String query = "SELECT * FROM billets WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+    private void validateEmailAndPassword(String email, String motDePasse) {
+        if (email == null || email.isEmpty() || motDePasse == null || motDePasse.isEmpty()) {
+            throw new IllegalArgumentException("L'email et le mot de passe ne peuvent pas être vides.");
+        }
+    }
+
+    public void imprimerBillet(int billetId) throws SQLException {
+        String query = "SELECT * FROM billets WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, billetId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    String classe = resultSet.getString("classe");
+                    String destination = resultSet.getString("destination");
+                    double prix = resultSet.getDouble("prix");
 
-            if (resultSet.next()) {
-                String classe = resultSet.getString("classe");
-                String destination = resultSet.getString("destination");
-                double prix = resultSet.getDouble("prix");
-
-                // Print the ticket details
-                System.out.println("Billet No: " + billetId);
-                System.out.println("Classe: " + classe);
-                System.out.println("Destination: " + destination);
-                System.out.println("Prix: " + prix);
-                System.out.println("Imprimé avec succès.");
-            } else {
-                System.out.println("Billet non trouvé.");
+                    // Print the ticket details
+                    System.out.println("Billet No: " + billetId);
+                    System.out.println("Classe: " + classe);
+                    System.out.println("Destination: " + destination);
+                    System.out.println("Prix: " + prix);
+                    System.out.println("Imprimé avec succès.");
+                } else {
+                    System.out.println("Billet non trouvé.");
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
     }
 }

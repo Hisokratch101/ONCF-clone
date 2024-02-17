@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
-public class inscreption extends JFrame {
+public class Inscription extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -32,7 +32,7 @@ public class inscreption extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					inscreption frame = new inscreption();
+					Inscription frame = new Inscription();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class inscreption extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public inscreption() {
+	public Inscription() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 957, 516);
 		contentPane = new JPanel();
@@ -104,7 +104,7 @@ public class inscreption extends JFrame {
 		JButton btnNewButton_1 = new JButton("Log in");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log frame = new log();
+				LogUser frame = new LogUser();
 				frame.setVisible(true);
 			}
 		});
