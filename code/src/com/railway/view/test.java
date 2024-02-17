@@ -22,7 +22,7 @@ public class test {
 
         // Add the ONCF logo (you can replace this with an actual image)
         ImageIcon oncfLogo = new ImageIcon("https://www.maroc.ma/sites/default/files/image_actualite/oncf_5.jpg "); 
-        JLabel logoLabel = new JLabel(oncf_5.jpg);
+        JLabel logoLabel = new JLabel("oncf_5.jpg");
         mainPanel.add(logoLabel, BorderLayout.NORTH);
 
         // Create a panel for the ticket details

@@ -12,6 +12,13 @@ public class Voyageur {
     private String motDePasse;
     private String Id;
     
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
     public String getNomComplet() {
         return nomComplet;
     }
@@ -76,16 +83,19 @@ public class Voyageur {
             throw new IllegalArgumentException("L'email et le mot de passe ne peuvent pas être vides.");
         }
         try {
-            String query = "SELECT * FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
+            String query = "SELECT COUNT(*) FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, motDePasse);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     public boolean signUp() {
@@ -132,11 +142,5 @@ public class Voyageur {
         }
     }
 
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
-    }
+    
 }
