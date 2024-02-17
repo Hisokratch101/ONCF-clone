@@ -1,10 +1,13 @@
 package com.railway.model;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+
+import com.railway.model.database.DatabaseConnection;
 
 public class Voyageur {
     private String nomComplet;
@@ -12,13 +15,13 @@ public class Voyageur {
     private String email;
     private String motDePasse;
     private String id;
-    private Connection dbConnection;
 
-    public Voyageur(String nomComplet, String email, String motDePasse, Connection dbConnection) {
+
+    public Voyageur(String nomComplet, String email, String motDePasse) {
         this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
-        this.dbConnection = dbConnection;
+
     }
 
     public String getId() {
@@ -75,17 +78,18 @@ public class Voyageur {
 
         // Insert reservation into database
         String insertQuery = "INSERT INTO reservations (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement insertStatement = dbConnection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            insertStatement.setDouble(1, prix);
-            insertStatement.setString(2, depart);
-            insertStatement.setString(3, arriver);
-            insertStatement.setTime(4, new java.sql.Time(dateDepart.getTime()));
-            insertStatement.setTime(5, new java.sql.Time(dateArrivee.getTime()));
-            int rowsAffected = insertStatement.executeUpdate();
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setDouble(1, prix);
+            preparedStatement.setString(2, depart);
+            preparedStatement.setString(3, arriver);
+            preparedStatement.setTime(4, new java.sql.Time(dateDepart.getTime()));
+            preparedStatement.setTime(5, new java.sql.Time(dateArrivee.getTime()));
+            int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
                 // Reservation successful, fetch the auto-generated reservation ID
-                try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int reservationId = generatedKeys.getInt(1);
                         return new Billet(reservationId, trajet, this, prix);
