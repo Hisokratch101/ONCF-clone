@@ -86,7 +86,7 @@ public class CarteDeReduction {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String type = resultSet.getString("type");
-                double reduction = resultSet.getDouble("reduction");
+                double reduction = resultSet.getDouble("reduction");	
                 CarteDeReduction carteDeReduction = new CarteDeReduction(id, type, reduction);
                 carteDeReductions.add(carteDeReduction);
             }
