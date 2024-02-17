@@ -1,17 +1,16 @@
 package com.railway.model;
-
-import java.util.Date;
+import java.sql.Time;
 
 public class Trajets {
     private String depart;
     private String arriver;
-    private Date dateDepart;
-    private Date dateArrivee;
+    private Time dateDepart;
+    private Time dateArrivee;
     private double prix;
     private int id;
 
 
-    public Trajets(String depart, String arriver, Date dateDepart, Date dateArrivee, double prix, int id) {
+    public Trajets(String depart, String arriver, Time dateDepart, Time dateArrivee, double prix, int id) {
         this.depart = depart;
         this.arriver = arriver;
         this.dateDepart = dateDepart;
@@ -60,23 +59,21 @@ public class Trajets {
     }
 
     // Getter and setter for private String dateDepart
-    public Date getDateDepart() {
+    public Time getDateDepart() {
 
         return this.dateDepart;
     }
 
-    public void setDateDepart(Date dateDepart) {
-
+    public void setDateDepart(Time dateDepart) {
         this.dateDepart = dateDepart;
     }
 
     // Getter and setter for private String dateArrivee
-    public Date getDateArrivee() {
-
+    public Time getDateArrivee() {
         return this.dateArrivee;
     }
 
-    public void setDateArrivee(Date dateArrivee) {
+    public void setDateArrivee(Time dateArrivee) {
 
         this.dateArrivee = dateArrivee;
     }

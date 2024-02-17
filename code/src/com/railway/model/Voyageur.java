@@ -79,8 +79,8 @@ public class Voyageur {
             insertStatement.setDouble(1, prix);
             insertStatement.setString(2, depart);
             insertStatement.setString(3, arriver);
-            insertStatement.setDate(4, new java.sql.Date(dateDepart.getTime()));
-            insertStatement.setDate(5, new java.sql.Date(dateArrivee.getTime()));
+            insertStatement.setTime(4, new java.sql.Time(dateDepart.getTime()));
+            insertStatement.setTime(5, new java.sql.Time(dateArrivee.getTime()));
             int rowsAffected = insertStatement.executeUpdate();
 
             if (rowsAffected > 0) {

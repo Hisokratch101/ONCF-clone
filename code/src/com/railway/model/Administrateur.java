@@ -20,14 +20,14 @@ public class Administrateur {
         this.motDePasse = hashPassword(motDePasse);
     }
 
-    public void ajouterTrajet(Trajets trajet) {
+    public static void ajouterTrajet(Trajets trajet) {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "INSERT INTO trajets (depart, arrive, DateDepart, DateArrivee, prix) VALUES (?, ?, ?, ?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, trajet.getDepart());
             preparedStatement.setString(2, trajet.getArriver());
-            preparedStatement.setString(3, trajet.getDateDepart());
-            preparedStatement.setString(4, trajet.getDateArrivee());
+            preparedStatement.setTime(3, trajet.getDateDepart());
+            preparedStatement.setTime(4, trajet.getDateArrivee());
             preparedStatement.setDouble(5, trajet.getPrix());
             preparedStatement.executeUpdate();
             System.out.println("Trajet ajouté avec succès.");
@@ -42,8 +42,8 @@ public class Administrateur {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, trajet.getDepart());
             preparedStatement.setString(2, trajet.getArriver());
-            preparedStatement.setString(3, trajet.getDateDepart());
-            preparedStatement.setString(4, trajet.getDateArrivee());
+            preparedStatement.setTime(3, trajet.getDateDepart());
+            preparedStatement.setTime(4, trajet.getDateArrivee());
             preparedStatement.setDouble(5, trajet.getPrix());
             preparedStatement.setInt(5, trajet.getId());
             preparedStatement.executeUpdate();
@@ -81,10 +81,9 @@ public class Administrateur {
 
     public void modifierCarteReduction(CarteDeReduction carte) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "UPDATE cartes_reduction SET (Id, reduction,type) WHERE type=(?,?,?)";
+            String query = "UPDATE cartereduction SET (Id, reduction,type) WHERE type=(?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(carte.getId()));
-
             preparedStatement.setString(2, String.valueOf(carte.getReduction()));
             preparedStatement.setString(3, carte.getType());
             preparedStatement.executeUpdate();

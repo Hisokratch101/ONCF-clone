@@ -120,6 +120,6 @@ public class CarteDeReduction {
         }
     }
     public double calculerPrix(double prixOriginal) {
-        return prixOriginal * (1 - this.reduction/100);
+        return prixOriginal * (1 - this.reduction*0.01);
     }
 }
