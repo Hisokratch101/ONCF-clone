@@ -97,7 +97,7 @@ public class TicketDetails extends JFrame {
         JButton btnBack = new JButton("back");
         btnBack.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Accueil frame = new Accueil();
+        		AccueilUser frame = new AccueilUser();
                 frame.setVisible(true);
         	}
         });

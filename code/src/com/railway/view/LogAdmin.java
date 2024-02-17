@@ -27,7 +27,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class logAdmin extends JFrame {
+public class LogAdmin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -43,7 +43,7 @@ public class logAdmin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					logAdmin frame = new logAdmin();
+					LogAdmin frame = new LogAdmin();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,7 +55,7 @@ public class logAdmin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public logAdmin() {
+	public LogAdmin() {
 		setBackground(new Color(255, 255, 255));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 881, 488);

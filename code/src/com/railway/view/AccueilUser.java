@@ -21,7 +21,7 @@ import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
-public class Accueil extends JFrame {
+public class AccueilUser extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -36,7 +36,7 @@ public class Accueil extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Accueil frame = new Accueil();
+                    AccueilUser frame = new AccueilUser();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -48,7 +48,7 @@ public class Accueil extends JFrame {
     /**
      * Create the frame.
      */
-    public Accueil() {
+    public AccueilUser() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 988, 680);
         contentPane = new JPanel();
