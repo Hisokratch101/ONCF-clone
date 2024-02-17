@@ -7,9 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class user extends JFrame {
+public class FrirstPage extends JFrame {
 
-    public user() {
+    public FrirstPage() {
         setTitle("Welcome");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +54,7 @@ public class user extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new user();
+                new FrirstPage();
             }
         });
     }
