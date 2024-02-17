@@ -16,48 +16,49 @@ public class AccueilAdmin extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel();
+        contentPane.setBackground(new Color(253, 179, 130));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel lblTitle = new JLabel("Welcome. Admin");
-        lblTitle.setBounds(280, 20, 250, 40);
+        JLabel lblTitle = new JLabel("Welcome Admin");
+        lblTitle.setBounds(10, 10, 204, 40);
         lblTitle.setBackground(new Color(255, 128, 0));
-        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 24));
+        lblTitle.setFont(new Font("Tempus Sans ITC", Font.BOLD, 24));
         contentPane.add(lblTitle);
 
         JButton btnAddTrain = new JButton("Add Train");
-        btnAddTrain.setBounds(10, 44, 200, 40);
-        btnAddTrain.setBackground(new Color(64, 0, 128));
+        btnAddTrain.setBounds(10, 100, 200, 40);
+        btnAddTrain.setBackground(new Color(255, 128, 0));
         btnAddTrain.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(btnAddTrain);
 
         JButton btnModifyTrajectory = new JButton("Modify Trajectory");
-        btnModifyTrajectory.setBounds(10, 116, 200, 40);
+        btnModifyTrajectory.setBounds(10, 167, 200, 40);
         btnModifyTrajectory.setBackground(new Color(128, 0, 255));
         btnModifyTrajectory.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(btnModifyTrajectory);
 
         JButton btnDeleteTrajectory = new JButton("Delete Trajectory");
-        btnDeleteTrajectory.setBounds(10, 180, 200, 40);
+        btnDeleteTrajectory.setBounds(10, 236, 200, 40);
         btnDeleteTrajectory.setBackground(new Color(255, 0, 128));
         btnDeleteTrajectory.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(btnDeleteTrajectory);
 
         JButton btnAddDiscountCard = new JButton("Add Discount Card");
-        btnAddDiscountCard.setBounds(10, 249, 200, 40);
+        btnAddDiscountCard.setBounds(10, 308, 200, 40);
         btnAddDiscountCard.setBackground(new Color(255, 0, 255));
         btnAddDiscountCard.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(btnAddDiscountCard);
 
         JButton btnDeleteDiscountCard = new JButton("Delete Discount Card");
-        btnDeleteDiscountCard.setBounds(10, 331, 200, 40);
+        btnDeleteDiscountCard.setBounds(10, 386, 200, 40);
         btnDeleteDiscountCard.setBackground(new Color(0, 128, 255));
         btnDeleteDiscountCard.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(btnDeleteDiscountCard);
 
         JButton btnViewClientAccounts = new JButton("View Client Accounts");
-        btnViewClientAccounts.setBounds(10, 403, 200, 40);
+        btnViewClientAccounts.setBounds(10, 460, 200, 40);
         btnViewClientAccounts.setBackground(new Color(128, 255, 255));
         btnViewClientAccounts.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(btnViewClientAccounts);
@@ -74,7 +75,7 @@ public class AccueilAdmin extends JFrame {
         
         JLabel lblNewLabel_1 = new JLabel("New label");
         lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\othma\\Desktop\\icon 4.jpg"));
-        lblNewLabel_1.setBounds(300, 100, 500, 500);
+        lblNewLabel_1.setBounds(214, 0, 586, 600);
         contentPane.add(lblNewLabel_1);
 
         // Button actions

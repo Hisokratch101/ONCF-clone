@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class VoyageurController {
 	private Voyageur voyageur;
 
-	public VoyageurController(String nomComplet, String email, String motDePasse, Connection connection) {
-		voyageur = new Voyageur(nomComplet, email, motDePasse, connection);
+	public VoyageurController(String nomComplet, String email, String motDePasse) {
+		voyageur = new Voyageur(nomComplet, email, motDePasse);
 	}
 
 	public void setCarteDeReduction(CarteDeReduction carteDeReduction) {

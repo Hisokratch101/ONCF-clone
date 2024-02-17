@@ -1,13 +1,10 @@
 package com.railway.model;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-
-import com.railway.model.database.DatabaseConnection;
 
 public class Voyageur {
     private String nomComplet;
@@ -15,13 +12,12 @@ public class Voyageur {
     private String email;
     private String motDePasse;
     private String id;
+    private Connection dbConnection;
 
-
-    public Voyageur(String nomComplet, String email, String motDePasse, CarteDeReduction carteDeReduction) {
+    public Voyageur(String nomComplet, String email, String motDePasse, Connection dbConnection) {
         this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
-        this.carteDeReduction = carteDeReduction;
 
     }
 
@@ -78,7 +74,7 @@ public class Voyageur {
         }
 
         // Insert reservation into database
-        String insertQuery = "INSERT INTO billet (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO reservations (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection()){
         	PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setDouble(1, prix);
@@ -90,7 +86,7 @@ public class Voyageur {
 
             if (rowsAffected > 0) {
                 // Reservation successful, fetch the auto-generated reservation ID
-                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int reservationId = generatedKeys.getInt(1);
                         return new Billet(reservationId, trajet, this, prix);
@@ -107,8 +103,7 @@ public class Voyageur {
         validateEmailAndPassword(email, motDePasse);
 
         String query = "SELECT COUNT(*) FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
-        try (Connection connection = DatabaseConnection.getConnection()){
-        	PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, motDePasse);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -125,8 +120,7 @@ public class Voyageur {
         validateEmailAndPassword(email, motDePasse);
 
         String query = "INSERT INTO voyageurs (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
-        try (Connection connection = DatabaseConnection.getConnection()){
-        	PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
             preparedStatement.setString(1, nomComplet);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, motDePasse);
@@ -143,8 +137,7 @@ public class Voyageur {
 
     public void imprimerBillet(int billetId) throws SQLException {
         String query = "SELECT * FROM billets WHERE id = ?";
-        try (Connection connection = DatabaseConnection.getConnection()){
-        	PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
             preparedStatement.setInt(1, billetId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
