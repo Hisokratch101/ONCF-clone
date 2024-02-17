@@ -72,24 +72,20 @@
         public Billet reserver(Trajets trajet) throws SQLException {
             double prix = trajet.getPrix();
             int id = this.id;
-            int dtrajet = trajet.getId();
-            String arriver = trajet.getArriver();
-            Date dateDepart = trajet.getDateDepart();
-            Date dateArrivee = trajet.getDateArrivee();
-
+            int idTrajet = trajet.getId();
+            
             if (this.carteDeReduction != null) {
                 prix = this.carteDeReduction.calculerPrix(prix);
             }
 
             // Insert reservation into database
-            String insertQuery = "INSERT INTO billet (id, trajet, voyageur) VALUES (?, ?, ?)";
+            String insertQuery = "INSERT INTO billet (id, trajet, voyageur,prix) VALUES (?, ?, ?,?)";
             try (Connection connection = DatabaseConnection.getConnection()){
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-                preparedStatement.setDouble(1, id);
-                
-                preparedStatement.setString(3, arriver);
-                preparedStatement.setTime(4, new java.sql.Time(dateDepart.getTime()));
-                preparedStatement.setTime(5, new java.sql.Time(dateArrivee.getTime()));
+                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(2, idTrajet);
+                preparedStatement.setInt(3, id);
+                preparedStatement.setDouble(4, prix);
                 int rowsAffected = preparedStatement.executeUpdate();
 
                 if (rowsAffected > 0) {
