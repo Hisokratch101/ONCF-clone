@@ -8,26 +8,32 @@ public class AdministrateurController {
     private Administrateur administrateur;
 
     public AdministrateurController(Administrateur administrateur) {
+
         this.administrateur = administrateur;
     }
 
     public void ajouterTrajet(Trajets trajet) {
+
         administrateur.ajouterTrajet(trajet);
     }
 
     public void modifierTrajet(Trajets trajet) {
+
         administrateur.modifierTrajet(trajet);
     }
 
     public void supprimerTrajet(int trajetId) {
+
         administrateur.supprimerTrajet(trajetId);
     }
 
     public void ajouterCarteReduction(CarteDeReduction carte) {
+
         administrateur.ajouterCarteReduction(carte);
     }
 
     public void modifierCarteReduction(CarteDeReduction carte) {
+
         administrateur.modifierCarteReduction(carte);
     }
 }

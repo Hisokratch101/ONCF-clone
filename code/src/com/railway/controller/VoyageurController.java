@@ -6,6 +6,7 @@ import com.railway.model.Billet;
 import com.railway.model.Trajets;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class VoyageurController {
 	private Voyageur voyageur;
@@ -19,29 +20,30 @@ public class VoyageurController {
 	}
 
 	public Billet reserver(Trajets trajet) {
-		return voyageur.reserver(trajet);
+		try {
+			return voyageur.reserver(trajet);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	public boolean login(String email, String motDePasse) {
+	public boolean login(String email, String motDePasse) throws SQLException {
 		return voyageur.login(email, motDePasse);
 	}
 
-	public boolean signUp() {
+	public boolean signUp() throws SQLException {
 		return voyageur.signUp();
 	}
 
-	public void imprimerBillet(int billetId) {
-
+	public void imprimerBillet(int billetId) throws SQLException {
 		voyageur.imprimerBillet(billetId);
 	}
 
 	public String getId() {
-
 		return voyageur.getId();
 	}
 
 	public void setId(String id) {
-
 		voyageur.setId(id);
 	}
 }
