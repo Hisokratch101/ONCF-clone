@@ -106,7 +106,8 @@ public class Voyageur {
         validateEmailAndPassword(email, motDePasse);
 
         String query = "SELECT COUNT(*) FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
-        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, motDePasse);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -123,7 +124,8 @@ public class Voyageur {
         validateEmailAndPassword(email, motDePasse);
 
         String query = "INSERT INTO voyageurs (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, nomComplet);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, motDePasse);
@@ -140,7 +142,8 @@ public class Voyageur {
 
     public void imprimerBillet(int billetId) throws SQLException {
         String query = "SELECT * FROM billets WHERE id = ?";
-        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getConnection()){
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, billetId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {

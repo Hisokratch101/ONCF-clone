@@ -14,7 +14,7 @@ public class AdministrateurController {
 
     public void ajouterTrajet(Trajets trajet) {
 
-        administrateur.ajouterTrajet(trajet);
+        Administrateur.ajouterTrajet(trajet);
     }
 
     public void modifierTrajet(Trajets trajet) {
