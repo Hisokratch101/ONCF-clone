@@ -22,7 +22,7 @@ public class Administrateur {
 
     public static void ajouterTrajet(Trajets trajet) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO trajets (idTrajets , depart, arriver, dateDepart, dateArrivee, prix) VALUES (?,?, ?, ?, ?, ?)";
+            String query = "INSERT INTO trajets (idTrajets,depart, arriver, dateDepart, dateArrivee, prix) VALUES (?,?, ?, ?, ?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, trajet.getId());
             preparedStatement.setString(2, trajet.getDepart());

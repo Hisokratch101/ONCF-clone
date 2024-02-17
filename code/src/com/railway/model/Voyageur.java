@@ -6,25 +6,41 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.railway.model.database.DatabaseConnection;
+
 public class Voyageur {
     private String nomComplet;
     private CarteDeReduction carteDeReduction;
     private String email;
     private String motDePasse;
-    private String id;
-    private Connection dbConnection;
+    private int id;
 
+    // Original constructor
     public Voyageur(String nomComplet, String email, String motDePasse) {
         this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
     }
 
-    public String getId() {
+    // Additional constructors
+    public Voyageur(String nomComplet, String email, String motDePasse, Connection dbConnection) {
+        this.nomComplet = nomComplet;
+        this.email = email;
+        this.motDePasse = motDePasse;
+    }
+
+    public Voyageur(String email, String motDePasse) {
+        this.email = email;
+        this.motDePasse = motDePasse;
+    }
+
+    public Voyageur() {}
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,29 +78,26 @@ public class Voyageur {
 
     public Billet reserver(Trajets trajet) throws SQLException {
         double prix = trajet.getPrix();
-        int id = trajet.getId();
-        String depart = trajet.getDepart();
-        String arriver = trajet.getArriver();
-        Date dateDepart = trajet.getDateDepart();
-        Date dateArrivee = trajet.getDateArrivee();
+        int id = this.id;
+        int idTrajet = trajet.getId();
 
         if (this.carteDeReduction != null) {
             prix = this.carteDeReduction.calculerPrix(prix);
         }
 
         // Insert reservation into database
-        String insertQuery = "INSERT INTO reservations (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement insertStatement = dbConnection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            insertStatement.setDouble(1, prix);
-            insertStatement.setString(2, depart);
-            insertStatement.setString(3, arriver);
-            insertStatement.setTime(4, new java.sql.Time(dateDepart.getTime()));
-            insertStatement.setTime(5, new java.sql.Time(dateArrivee.getTime()));
-            int rowsAffected = insertStatement.executeUpdate();
+        String insertQuery = "INSERT INTO billet (id, trajet, voyageur,prix) VALUES (?, ?, ?,?)";
+        try (Connection connection = DatabaseConnection.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, idTrajet);
+            preparedStatement.setInt(3, id);
+            preparedStatement.setDouble(4, prix);
+            int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
                 // Reservation successful, fetch the auto-generated reservation ID
-                try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int reservationId = generatedKeys.getInt(1);
                         return new Billet(reservationId, trajet, this, prix);
@@ -98,31 +111,44 @@ public class Voyageur {
     }
 
     public boolean login(String email, String motDePasse) throws SQLException {
+        boolean c = false;
         validateEmailAndPassword(email, motDePasse);
 
-        String query = "SELECT COUNT(*) FROM voyageurs WHERE email = ? AND mot_de_passe = ?";
-        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
+        String query = "SELECT COUNT(*) FROM voyageur WHERE email = ? AND motDePasse = ?";
+        try (Connection connection = DatabaseConnection.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, motDePasse);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
-                    return count > 0;
+
+                    c = count > 0;
                 }
             }
         }
-        return false;
+        if (c == true) {
+            System.out.println("Login avec succès");
+
+        } else {
+            System.out.println("Login échoué");
+        }
+        return c;
+
     }
 
     public boolean signUp() throws SQLException {
         validateEmailAndPassword(email, motDePasse);
 
-        String query = "INSERT INTO voyageurs (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
-            preparedStatement.setString(1, nomComplet);
-            preparedStatement.setString(2, email);
-            preparedStatement.setString(3, motDePasse);
+        String query = "INSERT INTO voyageur (id,nomComplet, email, motDePasse) VALUES (?,?, ?, ?)";
+        try (Connection connection = DatabaseConnection.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, nomComplet);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, motDePasse);
             int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Inscription avec succès");
             return rowsAffected > 0;
         }
     }
@@ -135,7 +161,8 @@ public class Voyageur {
 
     public void imprimerBillet(int billetId) throws SQLException {
         String query = "SELECT * FROM billets WHERE id = ?";
-        try (PreparedStatement preparedStatement = dbConnection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, billetId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
