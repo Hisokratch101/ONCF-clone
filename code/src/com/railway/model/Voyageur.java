@@ -17,10 +17,11 @@ public class Voyageur {
     private String id;
 
 
-    public Voyageur(String nomComplet, String email, String motDePasse) {
+    public Voyageur(String nomComplet, String email, String motDePasse, CarteDeReduction carteDeReduction) {
         this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
+        this.carteDeReduction = carteDeReduction;
 
     }
 
@@ -77,7 +78,7 @@ public class Voyageur {
         }
 
         // Insert reservation into database
-        String insertQuery = "INSERT INTO reservations (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO billet (prix, depart, arriver, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection()){
         	PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setDouble(1, prix);
